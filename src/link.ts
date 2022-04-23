@@ -9,10 +9,12 @@ export function makePrismaLink({
   endpoint,
   token,
   debug,
+  extraLink,
 }: {
   endpoint: string
   token?: string
   debug?: boolean
+  extraLink?: ApolloLink
 }): ApolloLink {
   const httpLink = new HTTPLinkDataloader({
     uri: endpoint,
@@ -48,9 +50,9 @@ export function makePrismaLink({
       )
     if (networkError) console.log(`[Network error]: ${networkError}`)
   })
-
+  let debugLink
   if (debug) {
-    const debugLink = new ApolloLink((operation, forward) => {
+    debugLink = new ApolloLink((operation, forward) => {
       console.log(`Request to ${endpoint}:`)
       console.log(`query:`)
       console.log(print(operation.query).trim())
@@ -64,11 +66,8 @@ export function makePrismaLink({
         return data
       })
     })
-
-    return ApolloLink.from([debugLink, reportErrors, backendLink])
-  } else {
-    return ApolloLink.from([reportErrors, backendLink])
   }
+  return ApolloLink.from([extraLink, debugLink, reportErrors, backendLink].filter(Boolean))
 }
 
 function isSubscription(operation: Operation): boolean {
