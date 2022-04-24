@@ -1,5 +1,6 @@
 import { FragmentReplacement } from 'graphql-binding'
 import { GraphQLResolveInfo } from 'graphql'
+import { ApolloLink } from 'apollo-link'
 
 export interface Filter {
   [key: string]: any
@@ -14,6 +15,7 @@ export interface BasePrismaOptions {
   endpoint?: string
   secret?: string
   debug?: boolean
+  extraLink?: ApolloLink
 }
 
 export interface PrismaOptions extends BasePrismaOptions {
