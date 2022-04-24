@@ -2,6 +2,9 @@ import { FlowGenerator } from "graphql-binding";
 import { printSchema } from 'graphql'
 import { getExistsFlowTypes } from './utils'
 
+const packageJson = require('../package.json')
+const packageName = packageJson.name
+
 export class PrismaFlowGenerator extends FlowGenerator {
   constructor(options) {
     super(options)
@@ -58,7 +61,7 @@ ${this.renderTypes()}`
 import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
 import { IResolvers } from 'graphql-tools/dist/Interfaces'
 import { Options } from 'graphql-binding'
-import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'`
+import { makePrismaBindingClass, BasePrismaOptions } from '${packageName}'`
   }
   renderExports() {
     return `export const Prisma: BindingConstructor<Prisma> = makePrismaBindingClass({typeDefs})`
