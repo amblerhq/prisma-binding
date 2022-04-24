@@ -1,6 +1,6 @@
 {
   "name": "@ambler/prisma-binding",
-  "version": "2.1.0-ambler.1",
+  "version": "2.1.0-ambler.2",
   "main": "dist/index.js",
   "typings": "./dist/index.d.ts",
   "files": [
